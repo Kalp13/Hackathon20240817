@@ -39,7 +39,7 @@
 
 
 		mainImage.style.transform = 'translateX(-2000%)';
-		mainImage.style.transition = 'transform 5s ease-in';
+		mainImage.style.transition = 'transform 1s ease-in';
 		setTimeout(() => {
 			mainImage.style.transform = 'translateX(0)';
 		}, 100);
