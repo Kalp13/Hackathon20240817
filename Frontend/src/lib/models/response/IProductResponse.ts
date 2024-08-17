@@ -6,4 +6,5 @@ interface IProductResponse {
     // primaryImage: string;
     images: string[];
     tags: string[];
+    quantity?: number;
 }
