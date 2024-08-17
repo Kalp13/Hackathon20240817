@@ -8,7 +8,7 @@
     import { goto } from '$app/navigation';
 
 	function navigateToLogin(){
-		goto('login')
+		goto('/login')
 	}
 </script>
 
@@ -48,9 +48,10 @@
 	}
 
 	.right-elements{
-		float: right;
+		display: flex;
 		justify-content: right;
 		align-items: center;
+		flex-direction: row;
 	}
 
 	.signIn {
