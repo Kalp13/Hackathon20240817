@@ -3,11 +3,11 @@ import { type Writable, writable } from 'svelte/store';
 
 interface IProductService {
     productList:  Writable<IProductResponse[]>;
-    productSingle: Writable<IProductResponse | null>;
-    productListRandom: Writable<IProductResponse | null>;
-    createdProduct: Writable<IProductResponse | null>;
-    updatedProduct: Writable<IProductResponse | null>;
-    deletedProduct: Writable<IProductResponse | null>;
+    productSingle: Writable<IProductResponse>;
+    productListRandom: Writable<IProductResponse>;
+    createdProduct: Writable<IProductResponse>;
+    updatedProduct: Writable<IProductResponse>;
+    deletedProduct: Writable<IProductResponse>;
 
     getProductList(request: IProductListRequest): Promise<void>;
     getProductSingle(id: number): Promise<void>;
@@ -19,11 +19,11 @@ interface IProductService {
 
 export class ProductService implements IProductService {
     productList = writable<IProductResponse[]>();
-    productSingle = writable<IProductResponse | null>(null);
-    productListRandom = writable<IProductResponse | null>(null);
-    createdProduct = writable<IProductResponse | null>(null);
-    updatedProduct = writable<IProductResponse | null>(null);
-    deletedProduct = writable<IProductResponse | null>(null);
+    productSingle = writable<IProductResponse>();
+    productListRandom = writable<IProductResponse>();
+    createdProduct = writable<IProductResponse>();
+    updatedProduct = writable<IProductResponse>();
+    deletedProduct = writable<IProductResponse>();
 
     async getProductList(request: IProductListRequest) {
         try {
@@ -62,7 +62,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.productSingle.set(data);
         } catch (error) {
-            this.productSingle.set(null);
             console.error(error);
         }
     }
@@ -81,7 +80,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.productListRandom.set(data);
         } catch (error) {
-            this.productListRandom.set(null);
             console.error(error);
         }
     }
@@ -101,7 +99,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.createdProduct.set(data);
         } catch (error) {
-            this.createdProduct.set(null);
             console.error(error);
         }
     }
@@ -121,7 +118,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.updatedProduct.set(data);
         } catch (error) {
-            this.updatedProduct.set(null);
             console.error(error);
         }
     }
@@ -135,7 +131,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.deletedProduct.set(data);
         } catch (error) {
-            this.deletedProduct.set(null);
             console.error(error);
         }
     }
