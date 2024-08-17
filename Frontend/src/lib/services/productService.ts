@@ -2,12 +2,12 @@ import { ServerURls } from '../../routes/+server';
 import { type Writable, writable } from 'svelte/store';
 
 interface IProductService {
-    productList:  Writable<IProductListResponse | null>;
-    productSingle: Writable<IProductResponse | null>;
-    productListRandom: Writable<IProductListResponse | null>;
-    createdProduct: Writable<IProductResponse | null>;
-    updatedProduct: Writable<IProductResponse | null>;
-    deletedProduct: Writable<IProductResponse | null>;
+    productList:  Writable<IProductResponse[]>;
+    productSingle: Writable<IProductResponse>;
+    productListRandom: Writable<IProductResponse>;
+    createdProduct: Writable<IProductResponse>;
+    updatedProduct: Writable<IProductResponse>;
+    deletedProduct: Writable<IProductResponse>;
 
     getProductList(request: IProductListRequest): Promise<void>;
     getProductSingle(id: number): Promise<void>;
@@ -18,12 +18,12 @@ interface IProductService {
 }
 
 export class ProductService implements IProductService {
-    productList = writable<IProductListResponse | null>(null);
-    productSingle = writable<IProductResponse | null>(null);
-    productListRandom = writable<IProductListResponse | null>(null);
-    createdProduct = writable<IProductResponse | null>(null);
-    updatedProduct = writable<IProductResponse | null>(null);
-    deletedProduct = writable<IProductResponse | null>(null);
+    productList = writable<IProductResponse[]>();
+    productSingle = writable<IProductResponse>();
+    productListRandom = writable<IProductResponse>();
+    createdProduct = writable<IProductResponse>();
+    updatedProduct = writable<IProductResponse>();
+    deletedProduct = writable<IProductResponse>();
 
     async getProductList(request: IProductListRequest) {
         try {
@@ -35,12 +35,20 @@ export class ProductService implements IProductService {
                 body: JSON.stringify(request),
             });
             if (!response.ok) {
-                throw new Error('An error occurred while fetching the product list.');
+                
+                console.log('An error occurred while fetching the product list.');
             }
-            const data = await response.json();
+            const data = await response.json() as IProductResponse[];
+            console.log(data)
+
             this.productList.set(data);
+
+
+            console.log(this.productList.subscribe);
+            
         } catch (error) {
-            this.productList.set(null);
+            this.productList.set([]);
+            console.log("null error")
             console.error(error);
         }
     }
@@ -54,7 +62,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.productSingle.set(data);
         } catch (error) {
-            this.productSingle.set(null);
             console.error(error);
         }
     }
@@ -73,7 +80,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.productListRandom.set(data);
         } catch (error) {
-            this.productListRandom.set(null);
             console.error(error);
         }
     }
@@ -93,7 +99,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.createdProduct.set(data);
         } catch (error) {
-            this.createdProduct.set(null);
             console.error(error);
         }
     }
@@ -113,7 +118,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.updatedProduct.set(data);
         } catch (error) {
-            this.updatedProduct.set(null);
             console.error(error);
         }
     }
@@ -127,7 +131,6 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.deletedProduct.set(data);
         } catch (error) {
-            this.deletedProduct.set(null);
             console.error(error);
         }
     }

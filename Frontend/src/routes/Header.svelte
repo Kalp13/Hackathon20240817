@@ -9,51 +9,47 @@
 
 <header>
 	<nav>
-		<a href="/">Home</a>
-		<ProductSearch />
-		<Cart />
+		<div class="nav">
+			<ul>
+				<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+					<a href="/">Home</a>
+				</li>
+				<li aria-current={$page.url.pathname.startsWith('/product') ? 'page' : undefined}>
+					<a href="/product">Products</a>
+				</li>
+			</ul>
+		</div>
+		<div class="search">
+			<ProductSearch />
+		</div>
+		<div class="cart">
+			<Cart />
+		</div>
 	</nav>
 </header>
 
 <style>
-	header {
-		display: flex;
-		justify-content: space-between;
+
+	.nav{
+		float:left; 
+
 	}
 
-	.corner {
-		width: 3em;
-		height: 3em;
-	}
-
-	.corner Cart {
-		display: flex;
+	.cart {
+		float: right;
+		justify-content: right;
 		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
+		padding: 5px;
 	}
 
 	nav {
-		display: flex;
-		justify-content: center;
 		--background: rgba(255, 255, 255, 0.7);
-	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
-
-	path {
-		fill: var(--background);
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: var(--background);
+		background-size: contain;
 	}
 
 	ul {
@@ -67,6 +63,16 @@
 		list-style: none;
 		background: var(--background);
 		background-size: contain;
+	}
+
+	.search{
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0;
+		margin: 0;
+		height: 3em;
 	}
 
 	li {
@@ -86,7 +92,7 @@
 		border-top: var(--size) solid var(--color-theme-1);
 	}
 
-	nav a {
+	nav li a {
 		display: flex;
 		height: 100%;
 		align-items: center;
