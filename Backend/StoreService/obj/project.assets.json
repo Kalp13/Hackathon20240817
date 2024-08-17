@@ -1349,24 +1349,38 @@
     ]
   },
   "packageFolders": {
-    "/Users/dalton/.nuget/packages/": {}
+    "C:\\Users\\RussellGoodison\\.nuget\\packages\\": {},
+    "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/dalton/Test 2/Hackathon20240817/Backend/StoreService/StoreService.csproj",
+      "projectUniqueName": "C:\\Users\\RussellGoodison\\source\\repos\\Hackathon20240817\\Backend\\StoreService\\StoreService.csproj",
       "projectName": "StoreService",
-      "projectPath": "/Users/dalton/Test 2/Hackathon20240817/Backend/StoreService/StoreService.csproj",
-      "packagesPath": "/Users/dalton/.nuget/packages/",
-      "outputPath": "/Users/dalton/Test 2/Hackathon20240817/Backend/StoreService/obj/",
+      "projectPath": "C:\\Users\\RussellGoodison\\source\\repos\\Hackathon20240817\\Backend\\StoreService\\StoreService.csproj",
+      "packagesPath": "C:\\Users\\RussellGoodison\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\RussellGoodison\\source\\repos\\Hackathon20240817\\Backend\\StoreService\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "/Users/dalton/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\RussellGoodison\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1379,6 +1393,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -1421,7 +1440,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
