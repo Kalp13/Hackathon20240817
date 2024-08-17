@@ -1,4 +1,13 @@
+import { ServerURls } from '../../routes/+server';
+import { writable } from 'svelte/store';
+
 interface IProductService {
+    productList: typeof writable;
+    productSingle: typeof writable;
+    productListRandom: typeof writable;
+    createdProduct: typeof writable;
+    updatedProduct: typeof writable;
+    deletedProduct: typeof writable;
 
     getProductList(request: IProductListRequest): Promise<void>;
     getProductSingle(id: number): Promise<void>;
@@ -8,12 +17,17 @@ interface IProductService {
     deleteProduct(id: number): Promise<void>;
 }
 
-const uri = '';
-
 export class ProductService implements IProductService {
+    productList = writable([]);
+    productSingle = writable({});
+    productListRandom = writable([]);
+    createdProduct = writable({});
+    updatedProduct = writable({});
+    deletedProduct = writable({});
+
     async getProductList(request: IProductListRequest) {
         try {
-            const response = await fetch(`${uri}/products/list`, {
+            const response = await fetch(`${ServerURls.productsList}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -21,29 +35,52 @@ export class ProductService implements IProductService {
                 body: JSON.stringify(request),
             });
             if (!response.ok) {
-                throw new Error('An error occurred while fetching the product.');
+                throw new Error('An error occurred while fetching the product list.');
             }
-            const data: IProductListResponse = await response.json();
+            const data = await response.json();
+            this.productList.set(data);
         } catch (error) {
+            this.productList.set([]);
             console.error(error);
         }
     }
 
     async getProductSingle(id: number) {
         try {
-            const response = await fetch(`${uri}/products/single${id}`);
+            const response = await fetch(`${ServerURls.productsSingle}`);
             if (!response.ok) {
-                throw new Error("An error has occurred while fetching the product");
+                throw new Error('An error occurred while fetching the product.');
             }
-            const data: IProductResponse = await response.json();
+            const data = await response.json();
+            this.productSingle.set(data);
         } catch (error) {
+            this.productSingle.set({});
+            console.error(error);
+        }
+    }
+
+    async getProductListRandom() {
+        try {
+            const response = await fetch(`${ServerURls.productsRandom}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error('An error occurred while fetching the random product list.');
+            }
+            const data = await response.json();
+            this.productListRandom.set(data);
+        } catch (error) {
+            this.productListRandom.set([]);
             console.error(error);
         }
     }
 
     async createProduct(request: IProductRequest) {
         try {
-            const response = await fetch(`${uri}/products/create`, {
+            const response = await fetch(`${ServerURls.productsCreate}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,17 +88,19 @@ export class ProductService implements IProductService {
                 body: JSON.stringify(request),
             });
             if (!response.ok) {
-                throw new Error('An error occurred while fetching the product.');
+                throw new Error('An error occurred while creating the product.');
             }
-            const data: IProductResponse = await response.json();
+            const data = await response.json();
+            this.createdProduct.set(data);
         } catch (error) {
+            this.createdProduct.set({});
             console.error(error);
         }
     }
 
     async updateProduct(request: IProductRequest) {
         try {
-            const response = await fetch(`${uri}/products/update`, {
+            const response = await fetch(`${ServerURls.productsUpdate}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,43 +108,29 @@ export class ProductService implements IProductService {
                 body: JSON.stringify(request),
             });
             if (!response.ok) {
-                throw new Error('An error occurred while fetching the product.');
+                throw new Error('An error occurred while updating the product.');
             }
-            const data: IProductResponse = await response.json();
+            const data = await response.json();
+            this.updatedProduct.set(data);
         } catch (error) {
+            this.updatedProduct.set({});
             console.error(error);
         }
     }
 
     async deleteProduct(id: number) {
         try {
-            const response = await fetch(`${uri}/products/delete${id}`);
+            const response = await fetch(`${ServerURls.productsDelete}`);
             if (!response.ok) {
-                throw new Error("An error has occurred while fetching the product");
+                throw new Error('An error occurred while deleting the product.');
             }
-            const data: IProductResponse = await response.json();
+            const data = await response.json();
+            this.deletedProduct.set(data);
         } catch (error) {
+            this.deletedProduct.set({});
             console.error(error);
         }
     }
-
-    async getProductListRandom() {
-        try {
-            const response = await fetch(`${uri}/products/random`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (!response.ok) {
-                throw new Error('An error occurred while fetching the product.');
-            }
-            const data: IProductListResponse = await response.json();
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
 }
 
 const productService = new ProductService();
