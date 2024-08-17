@@ -5,6 +5,11 @@
 
 	import Cart from '$lib/components/Cart.svelte'
 	import ProductSearch from '$lib/components/ProductSearch.svelte'
+    import { goto } from '$app/navigation';
+
+	function navigateToLogin(){
+		goto('login')
+	}
 </script>
 
 <header>
@@ -22,8 +27,15 @@
 		<div class="search">
 			<ProductSearch />
 		</div>
-		<div class="cart">
-			<Cart />
+		<div class="right-elements">
+			<div class="cart">
+				<Cart />
+			</div>
+			<div class="signIn">
+				<button on:click={navigateToLogin}>
+					<i class="fa-solid fa-user"></i>
+				  </button>
+			</div>
 		</div>
 	</nav>
 </header>
@@ -35,10 +47,17 @@
 
 	}
 
-	.cart {
+	.right-elements{
 		float: right;
 		justify-content: right;
 		align-items: center;
+	}
+
+	.signIn {
+		padding: 5px;
+	}
+
+	.cart {
 		padding: 5px;
 	}
 
