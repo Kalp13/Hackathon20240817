@@ -1,0 +1,3 @@
+interface IPurchaseRequest {
+    productIds: number[];
+}
