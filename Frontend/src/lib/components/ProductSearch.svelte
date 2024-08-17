@@ -11,9 +11,7 @@
 </script>
 
 <form on:submit|preventDefault={() => submittedValue = value}>
-    <label>
-        <input bind:value class="px-3 py-3 text-lg font-bold rounded-lg border focus:outline focus:outline-2 focus:outline-offset-2 bg-[#ffffff] text-[#444444] focus:outline-[#aaaaaa] border-[#cccccc]" placeholder="Search...">
-    </label>
+    <input bind:value class="px-3 py-3 text-sm rounded-lg border bg-[#ffffff] text-[#444444] border-[#cccccc]" placeholder="Search...">
     
     <button on:click={() => search()} style="display: none">GO</button>
 </form>
