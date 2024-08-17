@@ -1,10 +1,12 @@
 <script lang="ts">
+    import type { NullValue } from "rollup";
 
 
 
-	
-	import ProductService from '$lib/services/productService';
-	let productService = ProductService.getProductSingle();
+	// let searchCriteria: string;
+    // $: searchCriteria = $page.params.searchCriteria;
+	// import ProductService from '$lib/services/productService';
+	// let productService = ProductService.getProductSingle(1);
 
 
 	export let product: IProductResponse;
