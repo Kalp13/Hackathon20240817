@@ -3,7 +3,7 @@ interface IProductResponse {
     name: string;
     description: string;
     price: number;
-    primaryImage: string;
-    //images: string[];
+    // primaryImage: string;
+    images: string[];
     tags: string[];
 }
