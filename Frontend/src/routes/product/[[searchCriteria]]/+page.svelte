@@ -1,31 +1,54 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import productService from "$lib/services/productService";
-  import {afterNavigate, goto} from '$app/navigation'
+  import {afterNavigate, goto} from '$app/navigation';
   
   let products: IProductResponse[] = [];
+  let pageNumber: number = 0;
+  let y: number;
 
   afterNavigate(async () => {
-    let searchCriteria = null;
-
-    $: searchCriteria = $page.params.searchCriteria;
-
-    let productListRequest: IProductListRequest =  {
-      page : 0,
-      pageSize : 200,
-      search : searchCriteria,
-      tags : [],
-    }
-
     productService.productList.subscribe((value) => {
-      products = value;
+      if(value == undefined){
+        return;
+      }
+
+      value.forEach(el =>{
+        products.push(el);
+      });
+      products = products;
+      console.log(products);
     });
 
-    await productService.getProductList(productListRequest);  
+    await fetchProducts();
   });
+
+  async function fetchProducts(pageNumber:number = 0){
+    let productListRequest: IProductListRequest =  {
+      page : pageNumber,
+      pageSize : 10,
+      search : searchCriteria,
+      tags : []
+    }
+
+    await productService.getProductList(productListRequest); 
+  }
 
   function viewProduct(id: number){
     goto(`/product/productDetail/${id}`);
+  }
+
+  async function loadMore(){
+    pageNumber++;
+    await fetchProducts(pageNumber);
+  }
+
+  async function checkScrollPosition(){
+    const scrolledTo = window.scrollY + window.innerHeight
+    const isReachBottom = document.body.scrollHeight === scrolledTo
+
+    if (isReachBottom) 
+      await loadMore();
   }
 
   $: searchCriteria = $page.params.searchCriteria;
@@ -35,6 +58,8 @@
   <title>About</title>
   <meta name="description" content="About this app" />
 </svelte:head>
+
+<svelte:window on:scroll={checkScrollPosition} bind:scrollY={y} />
 
   <div class="grid grid-cols-1 xl:grid-cols-4 gap-4 px-1 py-4">
     {#each products as product, index}
@@ -55,6 +80,5 @@
         </div>
       </button>
     </div>
-
   {/each}
 </div>
