@@ -62,3 +62,5 @@
 		using it with JavaScript disabled!
 	</p>
 </div>
+
+</div>
