@@ -8,6 +8,20 @@
 	import productService from '$lib/services/productService';
 	import { page } from '$app/stores';
 	import { onMount } from "svelte";
+  
+
+	let productListRequest: IProductListRequest =  {
+		page : 0,
+		pageSize : 200,
+		search : "",
+		tags : [],
+	}
+
+	let products: IProductResponse[] = [];
+
+
+
+
 	let searchCriteria: string;
     $: id = $page.params.id;
 	console.log(id);
@@ -19,6 +33,17 @@
 	  product = value;
     });
     await productService.getProductSingle(parseInt(id));  
+
+
+	//big list:
+	productService.productList.subscribe((value) => {
+		console.log(value);
+		products = value;
+		});
+
+		await productService.getProductList(productListRequest);  
+
+
   });
 
 //   $: searchCriteria = $page.params.searchCriteria;
@@ -30,4 +55,8 @@
 <div class="flex">
 	<ProductDetailSection {product} ></ProductDetailSection>
 	
+	<div>
+
+	</div>
+
 </div>
