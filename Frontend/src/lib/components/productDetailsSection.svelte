@@ -55,9 +55,6 @@
 
 
 	}
-
-	
-	console.log("hahahah");
 </script>
 
 <svelte:head>
