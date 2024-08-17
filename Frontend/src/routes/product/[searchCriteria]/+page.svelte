@@ -1,7 +1,3 @@
-<script lang="ts">
-  
-</script>
-
 <svelte:head>
   <title>About</title>
   <meta name="description" content="About this app" />
@@ -13,7 +9,7 @@
 
 import { ProductService } from "$lib/services/productService";
 
-	ProductService
+	
   let counter = 20;
 
     let searchCriteria: string;
@@ -44,4 +40,6 @@ import { ProductService } from "$lib/services/productService";
     </div>
 </div>
   {/each}
+</div>
+
 </div>
