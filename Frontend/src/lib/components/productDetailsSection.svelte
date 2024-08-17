@@ -1,5 +1,12 @@
 <script lang="ts">
 
+
+
+	
+	import ProductService from '$lib/services/productService';
+	let productService = ProductService.getProductSingle();
+
+
 	export let product: IProductResponse;
 		product = {
 		description : "1.7L, 2200W, Auto Shut Off, Boil Dry Protection, Cordless, Water Level Indicator, 360 Degree Base, Removable Limescale Filter, Concealed Element, Rapid Boil, Stainless Steel, Black, 2 Year Warranty",
@@ -33,8 +40,8 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 
-<div class="grid grid-cols-2 gap-4 mt-14">
-	<div class="... bg-white p-2 rounded-lg">
+<div class="grid grid-cols-12 gap-4 mt-14 mx-20">
+	<div class="col-span-6 bg-white p-12 rounded-lg">
 		<div class="col-span-12 max-w-96 mx-1 justify-center">
 			<img id="mainImage" class="w-96 h-80" src="{product.primaryImage}" alt="Random Image" />
 		</div>
@@ -47,7 +54,7 @@
 		{/each}
 		</div>
 	</div>
-	<div class="... bg-white p-2 rounded-lg">
+	<div class="col-span-6 bg-white p-12 rounded-lg">
 		<h1 class="text-2xl font-bold">{product.name}</h1>
 		<p class="text-lg">{product.description}</p>
 		<div class="flex flex-wrap">
