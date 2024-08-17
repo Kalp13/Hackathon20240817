@@ -1,14 +1,30 @@
-<script lang="ts">
-  import { ProductService } from "$lib/services/productService";
-
-	ProductService
-  let counter = 20;
-</script>
-
 <svelte:head>
   <title>About</title>
   <meta name="description" content="About this app" />
 </svelte:head>
+
+<script lang="ts">
+    import { page } from '$app/stores';
+    import { onMount } from 'svelte';
+
+import { ProductService } from "$lib/services/productService";
+
+	
+  let counter = 20;
+
+    let searchCriteria: string;
+
+    $: searchCriteria = $page.params.searchCriteria;
+</script>
+
+<div class="text-column">
+    {#if searchCriteria}
+        <p>
+            {searchCriteria}
+        </p>
+    {:else}
+    <p>Loading...</p>
+    {/if}
 
 <div class="grid grid-cols-1 xl:grid-cols-4 gap-4 px-1 py-4">
   {#each Array(counter) as _, index}
@@ -24,4 +40,6 @@
     </div>
 </div>
   {/each}
+</div>
+
 </div>
