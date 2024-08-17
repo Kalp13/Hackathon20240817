@@ -10,6 +10,7 @@ interface IProductService {
     deletedProduct: Writable<IProductResponse>;
     tags: Writable<ITagResponse[]>;
     cart: Writable<IProductResponse[]>;
+    purchase: Writable<IPurchasedProductResponse>;
 
     getProductList(request: IProductListRequest): Promise<void>;
     getProductSingle(id: number): Promise<void>;
@@ -28,6 +29,7 @@ export class ProductService implements IProductService {
     deletedProduct = writable<IProductResponse>();
     tags = writable<ITagResponse[]>();
     cart = writable<IProductResponse[]>();
+    purchase = writable<IPurchasedProductResponse>();
 
     async getProductList(request: IProductListRequest) {
         try {
@@ -170,6 +172,26 @@ export class ProductService implements IProductService {
             console.error(error);
         }
     }
+
+    async Purchase(request: IPurchaseRequest) {
+        try {
+            const response = await fetch(`${ServerURls.purchaseCreate}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(request),
+            });
+            if (!response.ok) {
+                throw new Error('An error occurred while updating the product.');
+            }
+            const data = await response.json();
+            this.purchase.set(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 }
 
 const productService = new ProductService();
