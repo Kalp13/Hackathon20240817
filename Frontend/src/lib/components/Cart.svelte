@@ -3,7 +3,8 @@
   
 </script>
 
-<a href='/checkout'>
-    <i class="fa-solid fa-cart-shopping">
-</a>
-
+<div>
+    <a href='/checkout'>
+        <i class="fa-solid fa-cart-shopping"></i> Cart
+    </a>
+</div>
