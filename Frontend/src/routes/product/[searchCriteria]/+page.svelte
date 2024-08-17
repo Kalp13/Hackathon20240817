@@ -3,7 +3,24 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 
+<script lang="ts">
+    import { page } from '$app/stores';
+    import { onMount } from 'svelte';
+
+    let searchCriteria: string;
+
+    $: searchCriteria = $page.params.searchCriteria;
+</script>
+
 <div class="text-column">
+    {#if searchCriteria}
+        <p>
+            {searchCriteria}
+        </p>
+    {:else}
+    <p>Loading...</p>
+    {/if}
+
 	<h1>About this app</h1>
 
 	<p>
