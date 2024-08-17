@@ -57,6 +57,7 @@
 			randomProducts = value;
 		}
 		});
+		await productService.getProductListRandom(); 
 		
 		setInterval(async () => {
 			await productService.getProductListRandom(); 

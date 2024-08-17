@@ -24,11 +24,11 @@
 		mainImage.classList.add('hover:opacity-100');
 
 
-		mainImage.style.transform = 'translateX(-2000%)';
-		mainImage.style.transition = 'transform 1s ease-in';
-		setTimeout(() => {
-			mainImage.style.transform = 'translateX(0)';
-		}, 100);
+		// mainImage.style.transform = 'translateX(-2000%)';
+		// mainImage.style.transition = 'transform 1s ease-in';
+		// setTimeout(() => {
+		// 	mainImage.style.transform = 'translateX(0)';
+		// }, 100);
 
 		setTimeout(() => {
 			mainImage.classList.remove('transition-opacity');
