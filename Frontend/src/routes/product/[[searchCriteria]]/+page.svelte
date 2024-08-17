@@ -1,6 +1,10 @@
-<script lang="ts">
   import { page } from "$app/stores";
   import productService from "$lib/services/productService";
+  import {afterNavigate, goto} from '$app/navigation'
+  import { onMount } from "svelte";
+
+  let products: IProductResponse[] = [];
+  let tags: ITagResponse[] = [];
   import {afterNavigate, goto} from '$app/navigation';
   
   let products: IProductResponse[] = [];
@@ -20,6 +24,31 @@
       console.log(products);
     });
 
+    productService.tags.subscribe((value) => {
+      if(!value){
+        return;
+      }
+      else{
+        tags = value;
+        console.log(tags);
+      }
+    });
+
+    await productService.getProductList(productListRequest);
+    await productService.getTagsList();
+  });
+
+  afterNavigate(async () => {
+    let searchCriteria = $page.params.searchCriteria;
+    let searchTags = tags.filter(x => x.name.toLowerCase() === searchCriteria.toLowerCase())
+            .map(x => x.name.toLowerCase());
+
+    if(searchTags.length != 0) {
+      searchCriteria = ""
+    }
+
+    console.log(searchTags);
+
     await fetchProducts();
   });
 
@@ -28,6 +57,20 @@
       page : pageNumber,
       pageSize : 10,
       search : searchCriteria,
+      tags : searchTags,
+    }
+
+    productService.productList.subscribe((value) => {
+      if(!value){
+        return;
+      }
+      else{
+        products = value;
+      }
+    });
+
+    await productService.getProductList(productListRequest);
+  });
       tags : []
     }
 
@@ -81,4 +124,7 @@
       </button>
     </div>
   {/each}
+  </div>
+  {/if}
+
 </div>

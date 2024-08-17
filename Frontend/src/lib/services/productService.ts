@@ -8,6 +8,8 @@ interface IProductService {
     createdProduct: Writable<IProductResponse>;
     updatedProduct: Writable<IProductResponse>;
     deletedProduct: Writable<IProductResponse>;
+    tags: Writable<ITagResponse[]>;
+    cart: Writable<IProductResponse[]>;
 
     getProductList(request: IProductListRequest): Promise<void>;
     getProductSingle(id: number): Promise<void>;
@@ -24,6 +26,8 @@ export class ProductService implements IProductService {
     createdProduct = writable<IProductResponse>();
     updatedProduct = writable<IProductResponse>();
     deletedProduct = writable<IProductResponse>();
+    tags = writable<ITagResponse[]>();
+    cart = writable<IProductResponse[]>();
 
     async getProductList(request: IProductListRequest) {
         try {
@@ -131,6 +135,38 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.deletedProduct.set(data);
         } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async addToCart(product: IProductResponse) {
+        this.cart.update(value => [...value, product]);
+    }
+
+    async removeFromCart(product: IProductResponse) {
+        this.cart.update(value => value.filter(p => p.id !== product.id));
+    }
+
+    async clearCart() {
+        this.cart.set([]);
+    }
+
+    async getTagsList() {
+        try {
+            const response = await fetch(`${ServerURls.tagsList}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (!response.ok) {
+
+                console.log('An error occurred while fetching the product list.');
+            }
+            const data = await response.json() as ITagResponse[];
+            this.tags.set(data);
+        } catch (error) {
+            this.tags.set([]);
             console.error(error);
         }
     }
