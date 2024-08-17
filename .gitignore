@@ -1,5 +1,36 @@
-/Backend/.idea/.idea.StoreService/.idea/.name
-/Backend/StoreService/obj/Debug/net8.0/apphost
-/Backend/.idea/.idea.StoreService/.idea/vcs.xml
 Frontend/node_modules
 Frontend/.svelte-kit
+
+# Dependency directories
+node_modules/
+
+# IDE related
+.idea
+
+# Test coverage
+coverage
+*.lcov
+
+# Optional eslint cache
+.eslintcache
+
+# dotenv environment variables file
+.env
+.env.test
+
+# build output
+.vercel
+
+# OS-specific
+.DS_Store
+
+tmp
+
+benchmarking/compare/.results
+
+.jetclient
+
+.vs/
+[bB]in
+[Dd]ebug
+[Oo]bj
