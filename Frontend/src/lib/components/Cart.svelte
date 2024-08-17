@@ -1,4 +1,4 @@
-<script lang="ts"> 
+<!-- <script lang="ts"> 
 	import productService from '$lib/services/productService';
   import { goto } from '$app/navigation';
   export let productId;
@@ -13,9 +13,9 @@
 	  console.log(value);
 	  cartItems = value;
 
-    total = cartItems.reduce((acc, item) => {
-      return acc + item.price;
-    }, 0);
+    // total = cartItems.reduce((acc, item) => {
+    //   return acc + item.price;
+    // }, 0);
     });
   });
 </script>
@@ -87,4 +87,4 @@
 	}
 
 </style>
-
+ -->
