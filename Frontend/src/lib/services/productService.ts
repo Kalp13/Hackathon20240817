@@ -17,10 +17,6 @@ interface IProductService {
     createProduct(request: IProductRequest): Promise<void>;
     updateProduct(request: IProductRequest): Promise<void>;
     deleteProduct(id: number): Promise<void>;
-
-    addToCart(product: IProductResponse): Promise<void>;
-    removeFromCart(product: IProductResponse): Promise<void>;
-    clearCart(): Promise<void>;
 }
 
 export class ProductService implements IProductService {
