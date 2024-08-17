@@ -4,7 +4,7 @@ interface IProductResponse {
     description: string;
     price: number;
     primaryImage: string;
-    //images: string[];
+    images: string[];
     tags: string[];
     quantity?: number;
 }

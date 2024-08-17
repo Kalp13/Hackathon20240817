@@ -2,7 +2,7 @@
     import type { NullValue } from "rollup";
 
 
-
+ 
 	// let searchCriteria: string;
     // $: searchCriteria = $page.params.searchCriteria;
 	// import ProductService from '$lib/services/productService';
@@ -26,15 +26,35 @@
 		return ['https://th.bing.com/th/id/R.e95c538294b6b75f713c050ce475ed3d?rik=OaCLgLeDFQnDEg&pid=ImgRaw&r=0','https://th.bing.com/th/id/R.62325205054ee42cbd441c7036a7e3ec?rik=RHdJrVUP%2b%2b8klA&pid=ImgRaw&r=0','https://th.bing.com/th/id/R.2e428e8ae830e4015f0df533b8f006e1?rik=zskWlzdQaXpE1g&riu=http%3a%2f%2fwww.dumpaday.com%2fwp-content%2fuploads%2f2016%2f02%2frandom-pictures-1.jpg&ehk=xuubRylr%2bQ819mR1Fmu%2bbeB0Nbh5KEQ37YIe0L0JaK4%3d&risl=&pid=ImgRaw&r=0','https://i.imgur.com/PrSylav.jpg']
 	}
 
-
-	function handleClick(e:Event){
+ 
+	function handleClick(image:string){
 		//console.log(e)
 		const mainImage = document.getElementById('mainImage') as HTMLImageElement
-		mainImage.src = e.target.src;
-		mainImage.translate(0,5);
-	}
+		mainImage.src = image;
+		mainImage.classList.add('transition-opacity');
+		mainImage.classList.add('duration-700');
+		mainImage.classList.add('ease-in');
+		mainImage.classList.add('ease-in');
+		mainImage.classList.add('opacity-0');
+		mainImage.classList.add('hover:opacity-100');
 
-	
+
+		mainImage.style.transform = 'translateX(-2000%)';
+		mainImage.style.transition = 'transform 1s ease-in';
+		setTimeout(() => {
+			mainImage.style.transform = 'translateX(0)';
+		}, 100);
+
+		setTimeout(() => {
+			mainImage.classList.remove('transition-opacity');
+			mainImage.classList.remove('duration-700');
+			mainImage.classList.remove('ease-in');
+			mainImage.classList.remove('opacity-0');
+			mainImage.classList.remove('hover:opacity-100');
+		}, 50);
+
+
+	}
 </script>
 
 <svelte:head>
@@ -57,7 +77,7 @@
 			<div class="col-span-12 flex flex-row">
 			{#each product.images.map((image, index) => ({ image, index })) as { image, index }}
 				<div class="col-span-2 max-w-20 mx-1 my-1" >
-					<img id={index.toString()} class="w-20 h-20 transition hover:scale-125" src={image} on:click={handleClick} alt="Random Image" />
+					<img id={index.toString()} class="w-20 h-20 transition hover:scale-125" src={image} on:mouseover={() =>handleClick(image)} alt="Random Image" />
 				</div>
 			{/each}
 			</div>
