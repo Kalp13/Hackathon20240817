@@ -1,14 +1,6 @@
 <script lang="ts">
     import type { NullValue } from "rollup";
 
-
- 
-	// let searchCriteria: string;
-    // $: searchCriteria = $page.params.searchCriteria;
-	// import ProductService from '$lib/services/productService';
-	// let productService = ProductService.getProductSingle(1);
-
-
 	export let product: IProductResponse;
 	product = {
 	description : "",
@@ -18,13 +10,6 @@
 	images:[],
 	tags : []
 }
-	
-	const images:string[] = getImages();
-
-
-	function getImages():string[]{//Replace with call to api
-		return ['https://th.bing.com/th/id/R.e95c538294b6b75f713c050ce475ed3d?rik=OaCLgLeDFQnDEg&pid=ImgRaw&r=0','https://th.bing.com/th/id/R.62325205054ee42cbd441c7036a7e3ec?rik=RHdJrVUP%2b%2b8klA&pid=ImgRaw&r=0','https://th.bing.com/th/id/R.2e428e8ae830e4015f0df533b8f006e1?rik=zskWlzdQaXpE1g&riu=http%3a%2f%2fwww.dumpaday.com%2fwp-content%2fuploads%2f2016%2f02%2frandom-pictures-1.jpg&ehk=xuubRylr%2bQ819mR1Fmu%2bbeB0Nbh5KEQ37YIe0L0JaK4%3d&risl=&pid=ImgRaw&r=0','https://i.imgur.com/PrSylav.jpg']
-	}
 
  
 	function handleClick(image:string){
@@ -39,11 +24,11 @@
 		mainImage.classList.add('hover:opacity-100');
 
 
-		mainImage.style.transform = 'translateX(-2000%)';
-		mainImage.style.transition = 'transform 1s ease-in';
-		setTimeout(() => {
-			mainImage.style.transform = 'translateX(0)';
-		}, 100);
+		// mainImage.style.transform = 'translateX(-2000%)';
+		// mainImage.style.transition = 'transform 1s ease-in';
+		// setTimeout(() => {
+		// 	mainImage.style.transform = 'translateX(0)';
+		// }, 100);
 
 		setTimeout(() => {
 			mainImage.classList.remove('transition-opacity');
@@ -69,12 +54,12 @@
 
 { :else }
 	<div class="grid grid-cols-12 gap-4 mt-14 mx-20">
-		<div class="col-span-6 bg-white p-12 rounded-lg">
-			<div class="col-span-12 max-w-96 mx-1 justify-center">
-				<img id="mainImage" class="w-96 h-80 transition-transform" src="{product.images[0]}" alt="Random Image" />
+		<div class="col-span-6 bg-white p-12 flex flex-col rounded-lg justify-center">
+			<div class="col-span-12 max-w-96 mx-1 justify-center ml-auto mr-auto">
+				<img id="mainImage" class=" w-96 h-80 transition-transform" src="{product.images[0]}" alt="Random Image" />
 			</div>
 		
-			<div class="col-span-12 flex flex-row">
+			<div class="col-span-12 flex flex-row ml-auto mr-auto">
 			{#each product.images.map((image, index) => ({ image, index })) as { image, index }}
 				<div class="col-span-2 max-w-20 mx-1 my-1" >
 					<img id={index.toString()} class="w-20 h-20 transition hover:scale-125" src={image} on:mouseover={() =>handleClick(image)} alt="Random Image" />
@@ -87,7 +72,7 @@
 			<p class="text-lg">{product.description}</p>
 			<div class="flex flex-wrap">
 				{#each product.tags.map((tag)=>({tag})) as {tag}}
-					<p class="fancy-tag">{tag}</p>
+					<p class="fancy-tag text-center">{tag}</p>
 					
 				{/each}
 			</div>
