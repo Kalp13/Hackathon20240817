@@ -1,14 +1,6 @@
 <script lang="ts">
     import type { NullValue } from "rollup";
 
-
- 
-	// let searchCriteria: string;
-    // $: searchCriteria = $page.params.searchCriteria;
-	// import ProductService from '$lib/services/productService';
-	// let productService = ProductService.getProductSingle(1);
-
-
 	export let product: IProductResponse;
 	product = {
 	description : "",
@@ -18,13 +10,6 @@
 	images:[],
 	tags : []
 }
-	
-	const images:string[] = getImages();
-
-
-	function getImages():string[]{//Replace with call to api
-		return ['https://th.bing.com/th/id/R.e95c538294b6b75f713c050ce475ed3d?rik=OaCLgLeDFQnDEg&pid=ImgRaw&r=0','https://th.bing.com/th/id/R.62325205054ee42cbd441c7036a7e3ec?rik=RHdJrVUP%2b%2b8klA&pid=ImgRaw&r=0','https://th.bing.com/th/id/R.2e428e8ae830e4015f0df533b8f006e1?rik=zskWlzdQaXpE1g&riu=http%3a%2f%2fwww.dumpaday.com%2fwp-content%2fuploads%2f2016%2f02%2frandom-pictures-1.jpg&ehk=xuubRylr%2bQ819mR1Fmu%2bbeB0Nbh5KEQ37YIe0L0JaK4%3d&risl=&pid=ImgRaw&r=0','https://i.imgur.com/PrSylav.jpg']
-	}
 
  
 	function handleClick(image:string){
@@ -87,7 +72,7 @@
 			<p class="text-lg">{product.description}</p>
 			<div class="flex flex-wrap">
 				{#each product.tags.map((tag)=>({tag})) as {tag}}
-					<p class="fancy-tag">{tag}</p>
+					<p class="fancy-tag text-center">{tag}</p>
 					
 				{/each}
 			</div>

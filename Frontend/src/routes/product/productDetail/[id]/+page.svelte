@@ -22,6 +22,7 @@
 	}
 
 	let products: IProductResponse[] = [];
+	let randomProducts: IProductResponse[] = [];
 
 
 	// let searchCriteria: string;
@@ -38,44 +39,53 @@
 
 		//big list:
 		productService.productList.subscribe((value) => {
-			if(!value){
-				return;
-			}
-			else{
-				products = value;
-			}
-			});
+		if(!value){
+			return;
+		}
+		else{
+			products = value;
+		}
+		});
+		await productService.getProductList(productListRequest);  
 
-			await productService.getProductList(productListRequest);  
-  });
+		//randomList:
+		productService.productListRandom.subscribe((value) => {
+		if(!value){
+			return;
+		}
+		else{
+			randomProducts = value;
+		}
+		});
+		
+		setInterval(async () => {
+			await productService.getProductListRandom(); 
+			console.log("stuff");
+		}, 20000);
+		
+  	});
 	
   afterNavigate(async () => {
-	productService.productSingle.subscribe((value) => {
-		console.log(value);
-		product = value;
-	});
+	// productService.productSingle.subscribe((value) => {
+	// 	console.log(value);
+	// 	product = value;
+	// });
 	await productService.getProductSingle(parseInt(id));  
 
 	//big list:
-	productService.productList.subscribe((value) => {
-	if(!value){
-		return;
-	}
-	else{
-		products = value;
-	}
-	});
+	// productService.productList.subscribe((value) => {
+	// if(!value){
+	// 	return;
+	// }
+	// else{
+	// 	randomProducts = value;
+	// }
+	// });
 
 	await productService.getProductList(productListRequest);  
 });
 
 
-
-
-//   $: searchCriteria = $page.params.searchCriteria;
-// 	productService.getProductSingle(parseInt(id)).then((res) => {
-// 		product = productService.productSingle;
-// 	});
 </script>
 
 <div class="flex flex-row justify-center">
@@ -89,7 +99,7 @@
 			<p>Loading...</p>
 		</div>
 	{:else}
-		{#each products as rndProduct}
+		{#each randomProducts as rndProduct}
 		<div class="flex flex-col mx-1 mt-2 rounded-2xl w-72 bg-[#ffffff] shadow-xl p-4 h-96">
 			<button class="h-full" on:click={()=> viewProduct(rndProduct.id)}>
 			<figure class="flex justify-center items-center rounded-2xl">

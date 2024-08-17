@@ -4,7 +4,7 @@ import { type Writable, writable } from 'svelte/store';
 interface IProductService {
     productList:  Writable<IProductResponse[]>;
     productSingle: Writable<IProductResponse>;
-    productListRandom: Writable<IProductResponse>;
+    productListRandom: Writable<IProductResponse[]>;
     createdProduct: Writable<IProductResponse>;
     updatedProduct: Writable<IProductResponse>;
     deletedProduct: Writable<IProductResponse>;
@@ -25,7 +25,7 @@ interface IProductService {
 export class ProductService implements IProductService {
     productList = writable<IProductResponse[]>();
     productSingle = writable<IProductResponse>();
-    productListRandom = writable<IProductResponse>();
+    productListRandom = writable<IProductResponse[]>();
     createdProduct = writable<IProductResponse>();
     updatedProduct = writable<IProductResponse>();
     deletedProduct = writable<IProductResponse>();
