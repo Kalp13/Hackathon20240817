@@ -1,13 +1,13 @@
 import { ServerURls } from '../../routes/+server';
-import { writable } from 'svelte/store';
+import { type Writable, writable } from 'svelte/store';
 
 interface IProductService {
-    productList: typeof writable;
-    productSingle: typeof writable;
-    productListRandom: typeof writable;
-    createdProduct: typeof writable;
-    updatedProduct: typeof writable;
-    deletedProduct: typeof writable;
+    productList:  Writable<IProductListResponse | null>;
+    productSingle: Writable<IProductResponse | null>;
+    productListRandom: Writable<IProductListResponse | null>;
+    createdProduct: Writable<IProductResponse | null>;
+    updatedProduct: Writable<IProductResponse | null>;
+    deletedProduct: Writable<IProductResponse | null>;
 
     getProductList(request: IProductListRequest): Promise<void>;
     getProductSingle(id: number): Promise<void>;
@@ -18,12 +18,12 @@ interface IProductService {
 }
 
 export class ProductService implements IProductService {
-    productList = writable([]);
-    productSingle = writable({});
-    productListRandom = writable([]);
-    createdProduct = writable({});
-    updatedProduct = writable({});
-    deletedProduct = writable({});
+    productList = writable<IProductListResponse | null>(null);
+    productSingle = writable<IProductResponse | null>(null);
+    productListRandom = writable<IProductListResponse | null>(null);
+    createdProduct = writable<IProductResponse | null>(null);
+    updatedProduct = writable<IProductResponse | null>(null);
+    deletedProduct = writable<IProductResponse | null>(null);
 
     async getProductList(request: IProductListRequest) {
         try {
@@ -40,7 +40,7 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.productList.set(data);
         } catch (error) {
-            this.productList.set([]);
+            this.productList.set(null);
             console.error(error);
         }
     }
@@ -54,7 +54,7 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.productSingle.set(data);
         } catch (error) {
-            this.productSingle.set({});
+            this.productSingle.set(null);
             console.error(error);
         }
     }
@@ -73,7 +73,7 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.productListRandom.set(data);
         } catch (error) {
-            this.productListRandom.set([]);
+            this.productListRandom.set(null);
             console.error(error);
         }
     }
@@ -93,7 +93,7 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.createdProduct.set(data);
         } catch (error) {
-            this.createdProduct.set({});
+            this.createdProduct.set(null);
             console.error(error);
         }
     }
@@ -113,7 +113,7 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.updatedProduct.set(data);
         } catch (error) {
-            this.updatedProduct.set({});
+            this.updatedProduct.set(null);
             console.error(error);
         }
     }
@@ -127,7 +127,7 @@ export class ProductService implements IProductService {
             const data = await response.json();
             this.deletedProduct.set(data);
         } catch (error) {
-            this.deletedProduct.set({});
+            this.deletedProduct.set(null);
             console.error(error);
         }
     }
