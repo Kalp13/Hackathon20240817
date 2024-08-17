@@ -2,9 +2,9 @@ import { ServerURls } from '../../routes/+server';
 import { type Writable, writable } from 'svelte/store';
 
 interface IProductService {
-    productList:  Writable<IProductListResponse | null>;
+    productList:  Writable<IProductResponse[]>;
     productSingle: Writable<IProductResponse | null>;
-    productListRandom: Writable<IProductListResponse | null>;
+    productListRandom: Writable<IProductResponse | null>;
     createdProduct: Writable<IProductResponse | null>;
     updatedProduct: Writable<IProductResponse | null>;
     deletedProduct: Writable<IProductResponse | null>;
@@ -18,9 +18,9 @@ interface IProductService {
 }
 
 export class ProductService implements IProductService {
-    productList = writable<IProductListResponse | null>(null);
+    productList = writable<IProductResponse[]>();
     productSingle = writable<IProductResponse | null>(null);
-    productListRandom = writable<IProductListResponse | null>(null);
+    productListRandom = writable<IProductResponse | null>(null);
     createdProduct = writable<IProductResponse | null>(null);
     updatedProduct = writable<IProductResponse | null>(null);
     deletedProduct = writable<IProductResponse | null>(null);
@@ -35,12 +35,20 @@ export class ProductService implements IProductService {
                 body: JSON.stringify(request),
             });
             if (!response.ok) {
-                throw new Error('An error occurred while fetching the product list.');
+                
+                console.log('An error occurred while fetching the product list.');
             }
-            const data = await response.json();
+            const data = await response.json() as IProductResponse[];
+            console.log(data)
+
             this.productList.set(data);
+
+
+            console.log(this.productList.subscribe);
+            
         } catch (error) {
-            this.productList.set(null);
+            this.productList.set([]);
+            console.log("null error")
             console.error(error);
         }
     }
