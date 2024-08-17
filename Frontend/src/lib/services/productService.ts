@@ -55,7 +55,8 @@ export class ProductService implements IProductService {
 
     async getProductSingle(id: number) {
         try {
-            const response = await fetch(`${ServerURls.productsSingle}`);
+            const response = await fetch(`${ServerURls.productsSingle}/?id=${id}`, {
+                method: 'GET'});
             if (!response.ok) {
                 throw new Error('An error occurred while fetching the product.');
             }
