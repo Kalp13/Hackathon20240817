@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Backend"
   ],
-  "SelectedNode": "\\LICENSE",
+  "SelectedNode": "\\Backend\\StoreService.sln",
   "PreviewInSolutionExplorer": false
 }
