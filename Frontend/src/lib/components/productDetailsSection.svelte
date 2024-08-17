@@ -69,12 +69,12 @@
 
 { :else }
 	<div class="grid grid-cols-12 gap-4 mt-14 mx-20">
-		<div class="col-span-6 bg-white p-12 rounded-lg">
-			<div class="col-span-12 max-w-96 mx-1 justify-center">
-				<img id="mainImage" class="w-96 h-80 transition-transform" src="{product.images[0]}" alt="Random Image" />
+		<div class="col-span-6 bg-white p-12 flex flex-col rounded-lg justify-center">
+			<div class="col-span-12 max-w-96 mx-1 justify-center ml-auto mr-auto">
+				<img id="mainImage" class=" w-96 h-80 transition-transform" src="{product.images[0]}" alt="Random Image" />
 			</div>
 		
-			<div class="col-span-12 flex flex-row">
+			<div class="col-span-12 flex flex-row ml-auto mr-auto">
 			{#each product.images.map((image, index) => ({ image, index })) as { image, index }}
 				<div class="col-span-2 max-w-20 mx-1 my-1" >
 					<img id={index.toString()} class="w-20 h-20 transition hover:scale-125" src={image} on:mouseover={() =>handleClick(image)} alt="Random Image" />

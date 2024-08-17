@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import productService from "$lib/services/productService";
   import {afterNavigate, goto} from '$app/navigation'
-    import { onMount } from "svelte";
+  import { onMount } from "svelte";
   
   let products: IProductResponse[] = [];
 
