@@ -1,25 +1,19 @@
-<div>
-    
-</div>
+<script lang="ts">
+    import {goto} from '$app/navigation'
+    import { page } from '$app/stores'
 
-<script>
     let value = '';
     let submittedValue = null;
 
     var search = function(){
-        console.log('button clicked');
+        goto(`/product/${value}`);
     }
 </script>
 
 <form on:submit|preventDefault={() => submittedValue = value}>
     <label>
-        Search
-        <input bind:value class="px-3 py-3 text-lg font-bold rounded-lg border focus:outline focus:outline-2 focus:outline-offset-2 bg-[#ffffff] text-[#444444] focus:outline-[#aaaaaa] border-[#cccccc]" placeholder="Type your name..">
+        <input bind:value class="px-3 py-3 text-lg font-bold rounded-lg border focus:outline focus:outline-2 focus:outline-offset-2 bg-[#ffffff] text-[#444444] focus:outline-[#aaaaaa] border-[#cccccc]" placeholder="Search...">
     </label>
     
-    <button on:click={() => search()}>GO</button>
+    <button on:click={() => search()} style="display: none">GO</button>
 </form>
-
-{#if submittedValue != null}
-    <p>Submitted: {submittedValue}</p>
-{/if}
