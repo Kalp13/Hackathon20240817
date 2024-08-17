@@ -1,27 +1,32 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import productService from "$lib/services/productService";
-  import { onMount } from "svelte";
+  import {afterNavigate, goto} from '$app/navigation'
   
-
-  let productListRequest: IProductListRequest =  {
-    page : 0,
-    pageSize : 200,
-    search : "",
-    tags : [],
-  }
-
   let products: IProductResponse[] = [];
 
+  afterNavigate(async () => {
+    let searchCriteria = null;
 
-  onMount(async () => {
+    $: searchCriteria = $page.params.searchCriteria;
+
+    let productListRequest: IProductListRequest =  {
+      page : 0,
+      pageSize : 200,
+      search : searchCriteria,
+      tags : [],
+    }
+
     productService.productList.subscribe((value) => {
-	  console.log(value);
-    products = value;
+      products = value;
     });
 
     await productService.getProductList(productListRequest);  
   });
+
+  function viewProduct(id: number){
+    goto(`/product/productDetail/${id}`);
+  }
 
   $: searchCriteria = $page.params.searchCriteria;
 </script>
@@ -30,23 +35,26 @@
   <title>About</title>
   <meta name="description" content="About this app" />
 </svelte:head>
+
   <div class="grid grid-cols-1 xl:grid-cols-4 gap-4 px-1 py-4">
     {#each products as product, index}
-      <div class="flex flex-col rounded-2xl w-72 bg-[#ffffff] shadow-xl">
+    <div class="flex flex-col rounded-2xl w-72 bg-[#ffffff] shadow-xl p-4 h-96">
+        <button class="h-full" on:click={()=> viewProduct(product.id)}>
         <figure class="flex justify-center items-center rounded-2xl">
           <img
             src="{product.primaryImage}"
             alt="Card Preview"
-            class="rounded-t-2xl"
+            class="size-32"
           />
         </figure>
-        <div class="flex flex-col p-8">
-          <div class="text-2xl font-bold text-[#374151] pb-6">{product.name}</div>
-          <div class="flex justify-start pt-6">
+        <div class="flex flex-col pt-5">
+          <div class="text-base font-bold pb-6">{product.name}</div>
+          <div class="flex justify-start pt-6 text-xl text-sky-600">
             <p>R{product.price}</p>
           </div>
         </div>
-      </div>
-    {/each}
-  </div>
+      </button>
+    </div>
 
+  {/each}
+</div>
