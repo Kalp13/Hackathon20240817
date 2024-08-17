@@ -31,6 +31,27 @@
 		//console.log(e)
 		const mainImage = document.getElementById('mainImage') as HTMLImageElement
 		mainImage.src = e.target.src;
+		mainImage.classList.add('transition-opacity');
+		mainImage.classList.add('duration-700');
+		mainImage.classList.add('ease-in');
+		mainImage.classList.add('opacity-0');
+		mainImage.classList.add('hover:opacity-100');
+
+
+		mainImage.style.transform = 'translateX(-2000%)';
+		mainImage.style.transition = 'transform 5s ease-in';
+		setTimeout(() => {
+			mainImage.style.transform = 'translateX(0)';
+		}, 100);
+
+		setTimeout(() => {
+			mainImage.classList.remove('transition-opacity');
+			mainImage.classList.remove('duration-700');
+			mainImage.classList.remove('ease-in');
+			mainImage.classList.remove('opacity-0');
+			mainImage.classList.remove('hover:opacity-100');
+		}, 50);
+
 		mainImage.translate(0,5);
 	}
 
@@ -57,7 +78,7 @@
 			<div class="col-span-12 flex flex-row">
 			{#each product.images.map((image, index) => ({ image, index })) as { image, index }}
 				<div class="col-span-2 max-w-20 mx-1 my-1" >
-					<img id={index.toString()} class="w-20 h-20 transition hover:scale-125" src={image} on:click={handleClick} alt="Random Image" />
+					<img id={index.toString()} class="w-20 h-20 transition hover:scale-125" src={image} on:mouseover={handleClick} alt="Random Image" />
 				</div>
 			{/each}
 			</div>
