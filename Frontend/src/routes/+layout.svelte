@@ -3,7 +3,11 @@
 	import '../app.css';
 
 	import '@fortawesome/fontawesome-free/css/all.min.css'
+	
+	import TailwindCss from '../lib/TailwindCSS.svelte';
 </script>
+
+<TailwindCss/>
 
 <div class="app">
 	<Header />
