@@ -1,61 +1,54 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import productService from "$lib/services/productService";
-  import {afterNavigate, goto} from '$app/navigation'
-    import { onMount } from "svelte";
+  import {afterNavigate, goto} from '$app/navigation';
   
   let products: IProductResponse[] = [];
-
-  onMount(async () => {
-    let searchCriteria = null;
-
-    $: searchCriteria = $page.params.searchCriteria;
-
-    let productListRequest: IProductListRequest =  {
-      page : 0,
-      pageSize : 200,
-      search : searchCriteria,
-      tags : [],
-    }
-
-    productService.productList.subscribe((value) => {
-      if(!value){
-        return;
-      }
-      else{
-        products = value;
-      }
-    });
-
-    await productService.getProductList(productListRequest); 
-  });
+  let pageNumber: number = 0;
+  let y: number;
 
   afterNavigate(async () => {
-    let searchCriteria = null;
-
-    $: searchCriteria = $page.params.searchCriteria;
-
-    let productListRequest: IProductListRequest =  {
-      page : 0,
-      pageSize : 200,
-      search : searchCriteria,
-      tags : [],
-    }
-
     productService.productList.subscribe((value) => {
-      if(!value){
+      if(value == undefined){
         return;
       }
-      else{
-        products = value;
-      }
+
+      value.forEach(el =>{
+        products.push(el);
+      });
+      products = products;
+      console.log(products);
     });
 
-    await productService.getProductList(productListRequest);  
+    await fetchProducts();
   });
+
+  async function fetchProducts(pageNumber:number = 0){
+    let productListRequest: IProductListRequest =  {
+      page : pageNumber,
+      pageSize : 10,
+      search : searchCriteria,
+      tags : []
+    }
+
+    await productService.getProductList(productListRequest); 
+  }
 
   function viewProduct(id: number){
     goto(`/product/productDetail/${id}`);
+  }
+
+  async function loadMore(){
+    pageNumber++;
+    await fetchProducts(pageNumber);
+  }
+
+  async function checkScrollPosition(){
+    const scrolledTo = window.scrollY + window.innerHeight
+    const isReachBottom = document.body.scrollHeight === scrolledTo
+
+    if (isReachBottom) 
+      await loadMore();
   }
 
   $: searchCriteria = $page.params.searchCriteria;
@@ -66,13 +59,10 @@
   <meta name="description" content="About this app" />
 </svelte:head>
 
-  {#if !products}
-    <div class="w-full justify-center">
-      <p>Loading...</p>
-    </div>
-  {:else}
+<svelte:window on:scroll={checkScrollPosition} bind:scrollY={y} />
+
   <div class="grid grid-cols-1 xl:grid-cols-4 gap-4 px-1 py-4">
-    {#each products as product}
+    {#each products as product, index}
     <div class="flex flex-col rounded-2xl w-72 bg-[#ffffff] shadow-xl p-4 h-96">
         <button class="h-full" on:click={()=> viewProduct(product.id)}>
         <figure class="flex justify-center items-center rounded-2xl">
@@ -91,7 +81,4 @@
       </button>
     </div>
   {/each}
-  </div>
-  {/if}
-
-  
+</div>
