@@ -8,6 +8,7 @@ interface IProductService {
     createdProduct: Writable<IProductResponse>;
     updatedProduct: Writable<IProductResponse>;
     deletedProduct: Writable<IProductResponse>;
+    cart: Writable<IProductResponse[]>;
 
     getProductList(request: IProductListRequest): Promise<void>;
     getProductSingle(id: number): Promise<void>;
@@ -15,6 +16,10 @@ interface IProductService {
     createProduct(request: IProductRequest): Promise<void>;
     updateProduct(request: IProductRequest): Promise<void>;
     deleteProduct(id: number): Promise<void>;
+
+    addToCart(product: IProductResponse): Promise<void>;
+    removeFromCart(product: IProductResponse): Promise<void>;
+    clearCart(): Promise<void>;
 }
 
 export class ProductService implements IProductService {
@@ -24,6 +29,7 @@ export class ProductService implements IProductService {
     createdProduct = writable<IProductResponse>();
     updatedProduct = writable<IProductResponse>();
     deletedProduct = writable<IProductResponse>();
+    cart = writable<IProductResponse[]>();
 
     async getProductList(request: IProductListRequest) {
         try {
@@ -39,7 +45,6 @@ export class ProductService implements IProductService {
                 console.log('An error occurred while fetching the product list.');
             }
             const data = await response.json() as IProductResponse[];
-            console.log(data)
 
             this.productList.set(data);
 
@@ -134,6 +139,18 @@ export class ProductService implements IProductService {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    async addToCart(product: IProductResponse) {
+        this.cart.update(value => [...value, product]);
+    }
+
+    async removeFromCart(product: IProductResponse) {
+        this.cart.update(value => value.filter(p => p.id !== product.id));
+    }
+
+    async clearCart() {
+        this.cart.set([]);
     }
 }
 
