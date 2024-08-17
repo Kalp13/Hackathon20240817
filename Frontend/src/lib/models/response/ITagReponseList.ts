@@ -1,8 +1,4 @@
-interface ITagResponseList {
-    tags: ITagResponse[];
-}
-
 interface ITagResponse {
-    id: string;
+    id: number;
     name: string;
 }

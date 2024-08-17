@@ -2,9 +2,10 @@
   import { page } from "$app/stores";
   import productService from "$lib/services/productService";
   import {afterNavigate, goto} from '$app/navigation'
-    import { onMount } from "svelte";
-  
+  import { onMount } from "svelte";
+
   let products: IProductResponse[] = [];
+  let tags: ITagResponse[] = [];
 
   onMount(async () => {
     let searchCriteria = null;
@@ -27,19 +28,36 @@
       }
     });
 
-    await productService.getProductList(productListRequest); 
+    productService.tags.subscribe((value) => {
+      if(!value){
+        return;
+      }
+      else{
+        tags = value;
+        console.log(tags);
+      }
+    });
+
+    await productService.getProductList(productListRequest);
+    await productService.getTagsList();
   });
 
   afterNavigate(async () => {
-    let searchCriteria = null;
+    let searchCriteria = $page.params.searchCriteria;
+    let searchTags = tags.filter(x => x.name.toLowerCase() === searchCriteria.toLowerCase())
+            .map(x => x.name.toLowerCase());
 
-    $: searchCriteria = $page.params.searchCriteria;
+    if(searchTags.length != 0) {
+      searchCriteria = ""
+    }
+
+    console.log(searchTags);
 
     let productListRequest: IProductListRequest =  {
       page : 0,
       pageSize : 200,
       search : searchCriteria,
-      tags : [],
+      tags : searchTags,
     }
 
     productService.productList.subscribe((value) => {
@@ -51,7 +69,7 @@
       }
     });
 
-    await productService.getProductList(productListRequest);  
+    await productService.getProductList(productListRequest);
   });
 
   function viewProduct(id: number){
@@ -94,4 +112,3 @@
   </div>
   {/if}
 
-  
