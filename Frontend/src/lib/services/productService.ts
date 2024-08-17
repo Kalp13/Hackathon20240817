@@ -39,7 +39,6 @@ export class ProductService implements IProductService {
                 console.log('An error occurred while fetching the product list.');
             }
             const data = await response.json() as IProductResponse[];
-            console.log(data)
 
             this.productList.set(data);
 
@@ -136,3 +135,6 @@ export class ProductService implements IProductService {
         }
     }
 }
+
+const productService = new ProductService();
+export default productService;

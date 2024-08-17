@@ -8,19 +8,36 @@
 	import productService from '$lib/services/productService';
 	import { page } from '$app/stores';
 	import { onMount } from "svelte";
+  
+	let productListRequest: IProductListRequest =  {
+		page : 0,
+		pageSize : 200,
+		search : "",
+		tags : [],
+	}
+
+	let products: IProductResponse[] = [];
+
 	let searchCriteria: string;
     $: id = $page.params.id;
 	console.log(id);
 	let product: any;
 
 	onMount(async () => {
-    productService.productSingle.subscribe((value) => {
-	  console.log(value);
-	  product = value;
-    });
-    await productService.getProductSingle(parseInt(id));  
-  });
+		productService.productSingle.subscribe((value) => {
+		console.log(value);
+		product = value;
+		});
+		await productService.getProductSingle(parseInt(id));  
 
+		//big list:
+		// productService.productList.subscribe((value) => {
+		// 	console.log(value);
+		// 	products = value;
+		// });
+
+		// await productService.getProductList(productListRequest);  
+  });
 //   $: searchCriteria = $page.params.searchCriteria;
 // 	productService.getProductSingle(parseInt(id)).then((res) => {
 // 		product = productService.productSingle;
@@ -29,5 +46,20 @@
 
 <div class="flex">
 	<ProductDetailSection {product} ></ProductDetailSection>
-	
+
+	<!-- {#if !product}
+		<div class="w-full justify-center">
+			<p>Loading...</p>
+		</div>
+		{:else}
+		<div class="w-full m-20">
+			{#each Array(products) as product}
+				<div class="flex flex-col items-center">
+					<img src={product.images[0]} alt="product" class="w-1/2 h-1/2"/>
+					<p>{product.name}</p>
+					<p>{product.price}</p>
+				</div>
+			{/each}
+		</div>
+	{/if} -->
 </div>
